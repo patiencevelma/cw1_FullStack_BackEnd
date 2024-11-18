@@ -1,0 +1,28 @@
+{
+  "name": "online-learning-hub",
+  "version": "1.0.0",
+  "description": "An application for the after school subjects selection",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patiencevelma/cw1_FullStack_BackEnd.git"
+  },
+  "author": "Patience Velma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patiencevelma/cw1_FullStack_BackEnd/issues"
+  },
+  "homepage": "https://github.com/patiencevelma/cw1_FullStack_BackEnd#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "mongodb": "^6.10.0",
+    "nodemon": "^3.1.7",
+    "path": "^0.12.7",
+    "properties-reader": "^2.3.0"
+  }
+}
