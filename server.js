@@ -68,7 +68,7 @@ app.param("collectionName", (req, res, next, collectionName) => {
 // Routes
 
 // Get all documents from a collection
-app.get("/collections/subjects", async (req, res) => {
+app.get("/collections/:collectionName", async (req, res) => {
   try {
     const data = await req.collection.find({}).toArray();
     res.json(data);
@@ -79,7 +79,7 @@ app.get("/collections/subjects", async (req, res) => {
 });
 
 // Update a document (e.g., updating spaces)
-app.put("/collections/:subjects/:id", async (req, res) => {
+app.put("/collections/:collectionName/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const result = await req.collection.updateOne(
@@ -97,7 +97,7 @@ app.put("/collections/:subjects/:id", async (req, res) => {
 });
 
 // Add a new order
-app.post("/collections/orders", async (req, res) => {
+app.post("/collections/:collectionName", async (req, res) => {
   try {
     const result = await req.collection.insertOne(req.body);
     res.status(201).json({ id: result.insertedId });
