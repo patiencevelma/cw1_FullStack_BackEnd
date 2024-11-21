@@ -6,20 +6,23 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const app = express();
 
-// Middleware
+
+
+
 app.use(cors({
-  origin: 'http://127.0.0.1:5500'
+  origin: "https://patiencevelma.github.io",
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type"
 }));
+
+
 app.use(express.json());
 app.set("json spaces", 3);
 
-// Serve static files (HTML, CSS, JS) from the "public" directory
+// Serve static files (HTML, CSS, IMAGES, JS) from the "public" directory
 app.use(express.static(path.join(__dirname)));  // If you have a public folder for static assets
 
-// OR serve a specific HTML file when visiting the root route
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "app.html"));  // Replace 'app.html' with your HTML file name
-});
+
 
 // Load properties from the file
 const propertiesPath = path.resolve(__dirname, "./dbconnection.properties");
@@ -109,7 +112,7 @@ const imagesPath = path.resolve(__dirname, "images");
 app.use("/images", express.static(imagesPath));
 
 // Start the server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
