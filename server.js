@@ -97,7 +97,7 @@ app.put("/collections/:subjects/:id", async (req, res) => {
 });
 
 // Add a new order
-app.post("/collections/:orders", async (req, res) => {
+app.post("/collections/orders", async (req, res) => {
   try {
     const result = await req.collection.insertOne(req.body);
     res.status(201).json({ id: result.insertedId });
