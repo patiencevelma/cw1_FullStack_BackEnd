@@ -6,15 +6,15 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const app = express();
 
-// Middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://patiencevelma.github.io",
+  methods: "GET,POST,PUT,DELETE",
+  allowedHeaders: "Content-Type"
+}));
+
+
 app.use(express.json());
 app.set("json spaces", 3);
-
-// Serve static files (HTML, CSS, images,JS) from the "public" directory
-app.use(express.static(path.join(__dirname)));  // If you have a public folder for static assets
-
-
 
 
 // Load properties from the file
