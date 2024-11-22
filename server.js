@@ -47,7 +47,7 @@ async function connectDB() {
   try {
     await client.connect();
     console.log("Connected to MongoDB");
-    db = client.db1(dbName); // Use the database name from properties
+    db = client.db1(SHOOLAPP); // Use the database name from properties
   } catch (err) {
     console.error("MongoDB connection error:", err);
   }
