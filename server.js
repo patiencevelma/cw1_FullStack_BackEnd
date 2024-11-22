@@ -40,7 +40,7 @@ async function connectDB() {
   try {
     await client.connect();
     console.log("Connected to MongoDB");
-    db1 = client.db1(dbName); // Use the database name from properties
+    db1 = client.db(dbName); // Use the database name from properties
   } catch (err) {
     console.error("MongoDB connection error:", err);
   }
