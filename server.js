@@ -47,7 +47,7 @@ async function connectDB() {
   try {
     await client.connect();
     console.log("Connected to MongoDB");
-    db = client.db1(SHOOLAPP); // Use the database name from properties
+    db = client.db1(dbName); // Use the database name from properties
   } catch (err) {
     console.error("MongoDB connection error:", err);
   }
@@ -102,7 +102,7 @@ app.post('/collections/orders', async (req, res) => {
     const orderDetails = req.body; // The order data sent in the request body
 
     // Insert the order into the 'orders' collection
-    const result = await db1.collection('orders').insertOne(orderDetails);
+    const result = await db.collection('orders').insertOne(orderDetails);
     
     // Send a response with the inserted order ID
     res.status(201).json({ id: result.insertedId });
