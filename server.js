@@ -47,7 +47,7 @@ async function connectDB() {
   try {
     await client.connect();
     console.log("Connected to MongoDB");
-    db = client.dbBB(dbName); // Use the database name from properties
+    db = client.db(dbName); // Use the database name from properties
   } catch (err) {
     console.error("MongoDB connection error:", err);
   }
@@ -58,7 +58,7 @@ connectDB(); // Establish database connection
 // Middleware to attach collection to the request
 app.param("collectionName", (req, res, next, collectionName) => {
   try {
-    req.collection = db1.collection(collectionName);
+    req.collection = db.collection(collectionName);
     next();
   } catch (err) {
     res.status(500).json({ error: "Failed to access collection" });
