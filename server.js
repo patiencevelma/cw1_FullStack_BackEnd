@@ -96,21 +96,23 @@ app.put("/collections/:collectionName/:id", async (req, res) => {
   }
 });
 
-// POST route to add an order (only for creating new orders)
-app.post('/collections/orders', async (req, res) => {
+// POST route to add a document to a specified collection
+app.post("/collections/:collectionName", async (req, res) => {
   try {
-    const orderDetails = req.body; // The order data sent in the request body
+    const collectionName = req.params.collectionName;
+    const document = req.body; // The document data sent in the request body
 
-    // Insert the order into the 'orders' collection
-    const result = await db.collection('orders').insertOne(orderDetails);
-    
-    // Send a response with the inserted order ID
+    // Insert the document into the specified collection
+    const result = await db.collection(collectionName).insertOne(document);
+
+    // Send a response with the inserted document ID
     res.status(201).json({ id: result.insertedId });
   } catch (err) {
-    console.error('Error saving order:', err);
-    res.status(500).json({ error: 'Failed to save order' });
+    console.error("Error saving document:", err);
+    res.status(500).json({ error: "Failed to save document" });
   }
 });
+
 
 
 // Serve images
