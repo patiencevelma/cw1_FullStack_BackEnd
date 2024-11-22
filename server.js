@@ -96,22 +96,25 @@ app.put("/collections/:collectionName/:id", async (req, res) => {
   }
 });
 
-// POST route to add a document to a specified collection
-app.post("/collections/:collectionName", async (req, res) => {
+
+app.post("/collections/collectionName", async (req, res) => {
   try {
-    const collectionName = req.params.collectionName;
-    const document = req.body; // The document data sent in the request body
+    const orderDetails = req.body;
 
-    // Insert the document into the specified collection
-    const result = await db.collection(collectionName).insertOne(document);
+    // Insert the order into the 'orders' collection
+    const result = await db.collection("orders").insertOne(orderDetails);
 
-    // Send a response with the inserted document ID
-    res.status(201).json({ id: result.insertedId });
+    // Fetch the saved document to include all fields (with MongoDB-generated `_id`)
+    const savedOrder = await db.collection("orders").findOne({ _id: result.insertedId });
+
+    // Respond with the full saved order
+    res.status(201).json(savedOrder);
   } catch (err) {
-    console.error("Error saving document:", err);
-    res.status(500).json({ error: "Failed to save document" });
+    console.error("Error saving order:", err);
+    res.status(500).json({ error: "Failed to save order" });
   }
 });
+
 
 
 
