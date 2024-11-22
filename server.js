@@ -6,21 +6,14 @@ const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const app = express();
 
-
-
-
-app.use(cors({
-  origin: "https://patiencevelma.github.io",
-  methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type"
-}));
-
-
+// Middleware
+app.use(cors());
 app.use(express.json());
 app.set("json spaces", 3);
 
-// Serve static files (HTML, CSS, IMAGES, JS) from the "public" directory
+// Serve static files (HTML, CSS, images,JS) from the "public" directory
 app.use(express.static(path.join(__dirname)));  // If you have a public folder for static assets
+
 
 
 
@@ -47,7 +40,7 @@ async function connectDB() {
   try {
     await client.connect();
     console.log("Connected to MongoDB");
-    db = client.db(dbName); // Use the database name from properties
+    db1 = client.db(dbName); // Use the database name from properties
   } catch (err) {
     console.error("MongoDB connection error:", err);
   }
@@ -58,7 +51,7 @@ connectDB(); // Establish database connection
 // Middleware to attach collection to the request
 app.param("collectionName", (req, res, next, collectionName) => {
   try {
-    req.collection = db.collection(collectionName);
+    req.collection = db1.collection(collectionName);
     next();
   } catch (err) {
     res.status(500).json({ error: "Failed to access collection" });
@@ -96,31 +89,23 @@ app.put("/collections/:collectionName/:id", async (req, res) => {
   }
 });
 
-// POST route to add a document to a specified collection
+// Add a new order
 app.post("/collections/:collectionName", async (req, res) => {
   try {
-    const collectionName = req.params.collectionName;
-    const document = req.body; // The document data sent in the request body
-
-    // Insert the document into the specified collection
-    const result = await db.collection(collectionName).insertOne(document);
-
-    // Send a response with the inserted document ID
+    const result = await req.collection.insertOne(req.body);
     res.status(201).json({ id: result.insertedId });
   } catch (err) {
-    console.error("Error saving document:", err);
-    res.status(500).json({ error: "Failed to save document" });
+    console.error("Error saving data:", err);
+    res.status(500).json({ error: "Failed to save data" });
   }
 });
-
-
 
 // Serve images
 const imagesPath = path.resolve(__dirname, "images");
 app.use("/images", express.static(imagesPath));
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
